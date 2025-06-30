@@ -17,13 +17,13 @@ export const useJobListStore = create<TJobListStore>()((set) => ({
   searchText: '',
   activeJobItemId: null,
   actions: {
-    onSearchTextChange: (newText) => {
+    onSearchTextChange: (newText: string) => {
       set(() => ({ searchText: newText }));
     },
     setJobList: (jobList: TJobItem[]) => {
       set(() => ({ jobList: jobList }));
     },
-    setActiveItem: (id) => {
+    setActiveItem: (id: string) => {
       set(() => ({ activeJobItemId: id }));
     },
   },

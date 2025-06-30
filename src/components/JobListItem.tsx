@@ -2,13 +2,12 @@ import { Link } from 'react-router-dom';
 import type { TJobItem } from '../utilities/commonTypes';
 import BookmarkIcon from './BookmarkIcon';
 
-export default function JobListItem({
-  jobItem,
-  isActive,
-}: {
+type TJobListItemProps = {
   jobItem: TJobItem;
   isActive: boolean;
-}) {
+};
+
+export default function JobListItem({ jobItem, isActive }: TJobListItemProps) {
   return (
     <li className={`job-item ${isActive && 'job-item--active'}`}>
       <Link

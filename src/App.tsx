@@ -1,3 +1,4 @@
+import { Toaster } from 'react-hot-toast';
 import Background from './components/Background';
 import Container from './components/Container';
 import Footer from './components/Footer';
@@ -10,6 +11,7 @@ function App() {
       <Header />
       <Container />
       <Footer />
+      <Toaster position='top-right' />
     </>
   );
 }
