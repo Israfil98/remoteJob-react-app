@@ -1,13 +1,19 @@
-import { createUniqueKey, useSelectedJobItem } from '../hooks/hooks';
+import { useSelectedJobItem } from '../hooks/hooks';
 import BookmarkIcon from './BookmarkIcon';
 import Spinner from './Spinner';
 
+const createUniqueKey = (value: string, index: number) => {
+  const key = `${value} ${Math.random() + index}`;
+
+  return key;
+};
+
 export default function JobItemContent() {
-  const { selectedJobItem, isLoadingSelectedJobItem } = useSelectedJobItem();
+  const { data: selectedJobItem, isLoading } = useSelectedJobItem();
 
-  if (isLoadingSelectedJobItem) return <LoadingJobContent />;
+  if (isLoading) return <LoadingJobContent />;
 
-  if (!selectedJobItem) return <EmptyJobContent />;
+  if (!selectedJobItem) return null;
 
   return (
     <section className='job-details'>
@@ -122,21 +128,6 @@ function LoadingJobContent() {
     <section className='job-details'>
       <div>
         <Spinner />
-      </div>
-    </section>
-  );
-}
-
-function EmptyJobContent() {
-  return (
-    <section className='job-details'>
-      <div>
-        <div className='job-details__start-view'>
-          <p>What are you looking for?</p>
-          <p>
-            Start by searching for any technology your ideal job is working with
-          </p>
-        </div>
       </div>
     </section>
   );

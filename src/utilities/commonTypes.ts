@@ -7,21 +7,6 @@ export type TJobItem = {
   daysAgo: number;
 };
 
-export type TJobListStore = {
-  searchText: string;
-  jobList: TJobItem[];
-  isLoading: boolean;
-  activeJobItemId: number | null;
-  selectedJobItem: TSelectedJobItem | null;
-  isLoadingSelectedJobItem: boolean;
-  actions: {
-    onSearchTextChange: (newText: string) => void;
-    fetchJobListItems: (searchText: string) => Promise<void>;
-    handleHashChange: () => void;
-    fetchJobListItem: (id: number) => Promise<void>;
-  };
-};
-
 export type TFetchJobListAPI = {
   public: boolean;
   sorted: boolean;

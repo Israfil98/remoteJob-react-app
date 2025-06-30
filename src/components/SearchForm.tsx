@@ -1,10 +1,10 @@
-import { useDebounce, useJobList } from '../hooks/hooks';
 import { useJobListStore } from '../stores/jobListStore';
 
 export default function SearchForm() {
   const searchText = useJobListStore((state) => state.searchText);
-  const debouncedValue = useDebounce(searchText, 300);
-  const { onSearchTextChange } = useJobList(debouncedValue);
+  const onSearchTextChange = useJobListStore(
+    (state) => state.actions.onSearchTextChange
+  );
 
   return (
     <form

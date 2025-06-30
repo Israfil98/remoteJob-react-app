@@ -5,7 +5,9 @@ import ResultsCount from './ResultsCount';
 import SortingControls from './SortingControls';
 
 export default function Sidebar() {
-  const results = useJobListStore((state) => state.jobList).length;
+  const data = useJobListStore((state) => state.jobList);
+
+  const results = data.length;
 
   return (
     <div className='sidebar'>
