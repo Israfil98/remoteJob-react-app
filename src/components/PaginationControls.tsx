@@ -29,7 +29,7 @@ export default function PaginationControls() {
       ) : null}
       <button
         className={`pagination__button ${
-          currentPage > totalNumberOfPages && 'pagination__button--hidden'
+          currentPage >= totalNumberOfPages && 'pagination__button--hidden'
         }`}
         onClick={(e) => {
           e.currentTarget.blur();

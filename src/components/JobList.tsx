@@ -11,10 +11,21 @@ export function JobList() {
   const searchText = useJobListStore((state) => state.searchText);
   const activeJobItemId = useJobListStore((state) => state.activeJobItemId);
   const currentPage = useJobListStore((state) => state.currentPage);
+  const sortBy = useJobListStore((state) => state.sortBy);
+
   const debouncedSearchText = useDebounce(searchText, 300);
   const { data, isLoading } = useJobList(debouncedSearchText);
 
-  const jobListItemsPerPage = jobList.slice(
+  const jobListSorted = jobList.sort((a, b) => {
+    if (sortBy === 'relevant') {
+      return b.relevanceScore - a.relevanceScore;
+    } else if (sortBy === 'recent') {
+      return a.daysAgo - b.daysAgo;
+    }
+
+    return 0;
+  });
+  const jobListItemsPerPage = jobListSorted.slice(
     currentPage * RESULTS_PER_PAGE - RESULTS_PER_PAGE,
     currentPage * RESULTS_PER_PAGE
   ); // last index not included (getting 7 items per page)

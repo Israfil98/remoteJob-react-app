@@ -34,3 +34,5 @@ export type TFetchJobItemAPI = {
   public: boolean;
   jobItem: TSelectedJobItem;
 };
+
+export type TSortBy = 'relevant' | 'recent';
