@@ -16,7 +16,7 @@ export function JobList() {
   const debouncedSearchText = useDebounce(searchText, 300);
   const { data, isLoading } = useJobList(debouncedSearchText);
 
-  const jobListSorted = jobList.sort((a, b) => {
+  const jobListSorted = [...jobList].sort((a, b) => {
     if (sortBy === 'relevant') {
       return b.relevanceScore - a.relevanceScore;
     } else if (sortBy === 'recent') {

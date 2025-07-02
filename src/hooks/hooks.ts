@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQueries, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
@@ -41,6 +41,45 @@ export function useSelectedJobItem() {
   }, [id, setActiveItem, error]);
 
   return { data, isLoading } as const;
+}
+
+export function useBookmarkedJobItems(ids: number[]) {
+  return useQueries({
+    queries: ids.map((id) => ({
+      queryKey: ['job-item', String(id)],
+      queryFn: () => fetchJobItem(String(id)),
+      staleTime: 1000 * 60 * 60,
+      retry: false,
+      enabled: !!id,
+      refetchOnWindowFocus: false,
+    })),
+    combine: (results) => {
+      return {
+        data: results
+          .map((result) => result.data)
+          .filter((jobItem) => jobItem !== undefined),
+        pending: results.some((result) => result.isPending),
+      };
+    },
+  });
+}
+
+export function useBookmarkedIdList(id: number) {
+  const toggleBookmarkedId = useJobListStore(
+    (state) => state.actions.toggleBookmarkedId
+  );
+  const bookmarkedIdList = useJobListStore((state) => state.bookmarkedIdList);
+
+  const onBookmarkIconClick = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    toggleBookmarkedId(id);
+  };
+
+  return { bookmarkedIdList, onBookmarkIconClick };
 }
 
 export function useDebounce<T>(value: T, delay: number) {
