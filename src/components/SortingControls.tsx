@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useJobListStore } from '../stores/jobListStore';
 import type { TSortBy } from '../utilities/commonTypes';
 
@@ -8,10 +9,13 @@ export default function SortingControls() {
     (state) => state.actions.setCurrentPage
   );
 
-  const onSortByClick = (sortBy: TSortBy) => {
-    setCurrentPage(1);
-    setSortBy(sortBy);
-  };
+  const onSortByClick = useCallback(
+    (sortBy: TSortBy) => {
+      setCurrentPage(1);
+      setSortBy(sortBy);
+    },
+    [setCurrentPage, setSortBy]
+  );
 
   return (
     <section className='sorting'>

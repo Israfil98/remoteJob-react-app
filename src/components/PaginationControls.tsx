@@ -1,4 +1,5 @@
 import { ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons';
+import { useMemo } from 'react';
 import { useJobListStore } from '../stores/jobListStore';
 import { RESULTS_PER_PAGE } from '../utilities/constants';
 
@@ -9,7 +10,10 @@ export default function PaginationControls() {
     (state) => state.actions.setCurrentPage
   );
 
-  const totalNumberOfPages = jobList.length / RESULTS_PER_PAGE;
+  const totalNumberOfPages = useMemo(
+    () => jobList.length / RESULTS_PER_PAGE,
+    [jobList.length]
+  );
 
   return (
     <section className='pagination'>

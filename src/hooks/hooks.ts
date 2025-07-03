@@ -1,5 +1,5 @@
 import { useQueries, useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
 import { fetchJobItem, fetchJobList } from '../api/jobApi';
@@ -70,14 +70,15 @@ export function useBookmarkedIdList(id: number) {
   );
   const bookmarkedIdList = useJobListStore((state) => state.bookmarkedIdList);
 
-  const onBookmarkIconClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    event.preventDefault();
-    event.stopPropagation();
+  const onBookmarkIconClick = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      event.preventDefault();
+      event.stopPropagation();
 
-    toggleBookmarkedId(id);
-  };
+      toggleBookmarkedId(id);
+    },
+    [id, toggleBookmarkedId]
+  );
 
   return { bookmarkedIdList, onBookmarkIconClick };
 }
