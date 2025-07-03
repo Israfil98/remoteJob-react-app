@@ -1,9 +1,11 @@
+import { forwardRef } from 'react';
+import { createPortal } from 'react-dom';
 import { useBookmarkedJobItems } from '../hooks/hooks';
 import { useJobListStore } from '../stores/jobListStore';
 import JobListItem from './JobListItem';
 import Spinner from './Spinner';
 
-export default function BookmarksPopover() {
+const BookmarksPopover = forwardRef<HTMLDivElement>(function (_, ref) {
   // get bookmarked ids
   const activeJobItemId = useJobListStore((state) => state.activeJobItemId);
   const bookmarkedIdList = useJobListStore((state) => state.bookmarkedIdList);
@@ -13,8 +15,10 @@ export default function BookmarksPopover() {
 
   // display array of JobListItem component
 
-  return (
-    <div className='bookmarks-popover'>
+  return createPortal(
+    <div
+      className='bookmarks-popover'
+      ref={ref}>
       <ul className='job-list'>
         {pending ? (
           <Spinner />
@@ -30,6 +34,9 @@ export default function BookmarksPopover() {
           })
         )}
       </ul>
-    </div>
+    </div>,
+    document.body
   );
-}
+});
+
+export default BookmarksPopover;

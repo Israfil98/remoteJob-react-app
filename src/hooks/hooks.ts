@@ -93,3 +93,20 @@ export function useDebounce<T>(value: T, delay: number) {
 
   return debouncedValue;
 }
+
+export function useOnClickOutside(
+  refs: React.RefObject<HTMLElement | null>[],
+  handler: () => void
+) {
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (refs.every((ref) => !ref.current?.contains(e.target as Node))) {
+        handler();
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [refs, handler]);
+}
